@@ -1,12 +1,21 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// 1. Ruta pública de bienvenida (para probar que la API responde)
-Route::get('/ping', function () {
-    return response()->json(['message' => '¡API activa!']);
-});
+// probar api
+Route::get('/ping', fn() => response()->json(['message' => '¡API activa!']));
+
+// register
+Route::post('/register', [AuthController::class, 'register']);
+// login
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {});
+
+
+
 
 // 2. Ruta protegida estándar (Solo requiere estar autenticado)
 Route::get('/user', function (Request $request) {
