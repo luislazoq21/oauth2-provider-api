@@ -31,7 +31,9 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $token = $user->createToken('PersonalAccessToken', ['read-tasks'])->accessToken;
+        $user->tokens()->delete();
+        // $token = $user->createToken('PersonalAccessToken', ['read-tasks'])->accessToken;
+        $token = $user->createToken('PersonalAccessToken', ['write-tasks'])->accessToken;
 
         return response()->json([
             'message' => 'User logged in successfully',
